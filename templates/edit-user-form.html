@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %} Edit User {% endblock %} {% block
+content %}
+<div class="container-fluid">
+  <h1>Edit User</h1>
+  <form action="/users/{{ user.id }}/edit" method="POST">
+    <div class="form-group">
+      <label for="first-name">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="first-name"
+        placeholder="Enter a first name"
+        name="first"
+      />
+    </div>
+    <div class="form-group">
+      <label for="last-name">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="last-name"
+        placeholder="Enter a last name"
+        name="last"
+      />
+    </div>
+    <div class="form-group">
+      <label for="image-url">Image URL</label>
+      <input
+        type="url"
+        class="form-control"
+        id="image-url"
+        placeholder="Provide an image of this user"
+        name="image"
+      />
+    </div>
+    <a href="/users/{{ user.id }}" class="btn btn-outline-primary">Cancel</a>
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>
+{% endblock %}

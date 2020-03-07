@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block title %} User {% endblock %} {% block content
+%}
+<div class="container-fluid">
+  <div class="row">
+    {% if user.image_url %}
+    <div class="col-sm-2 col-6 mt-2">
+      <img
+        src="{{ user.image_url }}"
+        alt="{{ user.full_name }}"
+        class="img-fluid"
+      />
+    </div>
+    {% endif %}
+    <div class="col">
+      <div class="col-sm-10 col-12">
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        <a class="btn btn-primary btn-sm" href="/users/{{ user.id }}/edit"
+          >Edit</a
+        >
+        <a class="btn btn-danger btn-sm" href="/users/{{ user.id }}/delete"
+          >Delete</a
+        >
+        <h1>Posts</h1>
+        <ul>
+          {% if user.posts %} {% for post in user.posts %}
+          <li>
+            <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+          </li>
+          {% endfor %} {% endif %}
+        </ul>
+        <a class="btn btn-primary" href="/users/{{ user.id }}/posts/new"
+          >Add Post</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
