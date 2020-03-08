@@ -35,14 +35,14 @@ def users():
 
 
 @app.route('/users/new')
-def add_user_page():
+def user_add_page():
     """Show add new user form."""
 
     return render_template('new-user-form.html')
 
 
 @app.route('/users/new', methods=['POST'])
-def add_user():
+def user_add():
     """Get new user form inputs to create new user."""
     first = request.form.get('first')
     last = request.form.get('last', 0)
@@ -57,7 +57,7 @@ def add_user():
 
 
 @app.route('/users/<int:user_id>')
-def show_user_page(user_id):
+def user_page(user_id):
     """User detail page."""
 
     user = User.query.get(user_id)
@@ -66,7 +66,7 @@ def show_user_page(user_id):
 
 
 @app.route('/users/<int:user_id>/edit')
-def edit_user_page(user_id):
+def user_edit_page(user_id):
 
     user = User.query.get(user_id)
 
@@ -74,7 +74,7 @@ def edit_user_page(user_id):
 
 
 @app.route('/users/<int:user_id>/edit', methods=['POST'])
-def edit_user(user_id):
+def user_edit(user_id):
 
     first = request.form.get('first')
     last = request.form.get('last', 0)
@@ -91,7 +91,7 @@ def edit_user(user_id):
 
 
 @app.route('/users/<int:user_id>/delete')
-def delete_user(user_id):
+def user_delete(user_id):
 
     user = User.query.get(1)
     db.session.delete(user)
@@ -102,7 +102,7 @@ def delete_user(user_id):
 
 
 @app.route('/users/<int:user_id>/posts/new')
-def add_post_form(user_id):
+def post_add_page(user_id):
     """Shows new post form."""
 
     user = User.query.get(user_id)
@@ -111,7 +111,7 @@ def add_post_form(user_id):
 
 
 @app.route('/users/<int:user_id>/posts/new', methods=['POST'])
-def add_post(user_id):
+def post_add(user_id):
     """Get form information to create new post."""
 
     new_post = Post(
@@ -126,7 +126,7 @@ def add_post(user_id):
 
 
 @app.route('/posts/<int:post_id>')
-def show_post(post_id):
+def post_page(post_id):
 
     post = Post.query.get_or_404(post_id)
 
@@ -134,7 +134,7 @@ def show_post(post_id):
 
 
 @app.route('/posts/<int:post_id>/edit')
-def edit_post_form(post_id):
+def post_edit_page(post_id):
 
     post = Post.query.get_or_404(post_id)
 
@@ -142,7 +142,7 @@ def edit_post_form(post_id):
 
 
 @app.route('/posts/<int:post_id>/edit', methods=['POST'])
-def edit_post(post_id):
+def post_edit(post_id):
 
     post = Post.query.get_or_404(post_id)
 
@@ -155,7 +155,7 @@ def edit_post(post_id):
 
 
 @app.route('/posts/<int:post_id>/delete', methods=['POST'])
-def delete_post(post_id):
+def post_delete(post_id):
     """Handle form submission for delete post."""
 
     post = Post.query.get_or_404(post_id)
@@ -165,3 +165,8 @@ def delete_post(post_id):
     db.session.commit()
 
     return redirect(f'/users/{user_id}')
+
+
+@app.errorhandler(404)
+def error_page(e):
+    return render_template('error.html'), 404

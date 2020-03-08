@@ -46,6 +46,12 @@ class Post(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
+    @property
+    def nice_date(self):
+        """Return nicely formatted date."""
+
+        return self.created_at.strftime("%m/%d/%y")
+
 
 def connect_db(app):
     """Connect to database."""
