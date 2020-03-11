@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block title %} Post {% endblock %} {% block content
 %}
 <div class="container-fluid">
-  <div class="col-sm-2">
+  <div class="col">
     <div class="row">
       <h1>{{ post.title }}</h1>
     </div>
@@ -10,6 +10,16 @@
     </div>
     <div class="row">
       <p><i>By {{ post.user.first_name }} {{ post.user.last_name }}</i></p>
+    </div>
+    <div class="row">
+      <h6>
+        <b>Tags: </b>
+        {% for tag in post.tags %}
+        <a href="/tags/{{ tag.id }}"
+          ><i class="badge badge-primary">{{ tag.name }}</i></a
+        >
+        {% endfor %}
+      </h6>
     </div>
     <div class="row">
       <form>

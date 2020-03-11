@@ -46,11 +46,36 @@ class Post(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
+    tags = db.relationship('Tag',
+                           secondary='posts_tags',
+                           backref='posts')
+
     @property
     def nice_date(self):
         """Return nicely formatted date."""
 
         return self.created_at.strftime("%m/%d/%y")
+
+
+class PostTag(db.Model):
+    """Post and tag association."""
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        'posts.id'), primary_key=True)
+
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+
+
+class Tag(db.Model):
+    """A tag that can be associated with a post."""
+
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    name = db.Column(db.Text, nullable=False, unique=True)
 
 
 def connect_db(app):
